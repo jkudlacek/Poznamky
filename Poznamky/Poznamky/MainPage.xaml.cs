@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using SQLite;
 
 namespace Poznamky
 {
@@ -13,6 +14,14 @@ namespace Poznamky
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        readonly SQLiteAsyncConnection _database;
+
+        public NoteDatabase(string dbPath)
+        {
+            _database = new SQLiteAsyncConnection(dbPath);
+            _database.CreateTableAsync<Note>().Wait();
         }
     }
 }
