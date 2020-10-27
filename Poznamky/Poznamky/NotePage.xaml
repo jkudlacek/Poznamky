@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Poznamky.NotePage"
+             BackgroundColor="#000">
+
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+        <Editor Placeholder="Zapište název"
+                Text="{Binding Title}"  
+                HeightRequest="100" />
+        
+        <Editor Placeholder="Zapište poznámku"
+                Text="{Binding Text}"
+                HeightRequest="100" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Text="Uložit" 
+                    Clicked="OnSaveButtonClicked" />
+            <Button Grid.Column="1"
+                    BackgroundColor="DarkRed"
+                    Text="Smazat" 
+                    Clicked="OnDeleteButtonClicked"/>
+        </Grid>
+    </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

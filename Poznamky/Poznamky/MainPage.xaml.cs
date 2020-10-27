@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using SQLite;
+using Poznamky.Models;
+
 
 namespace Poznamky
 {
@@ -15,13 +16,29 @@ namespace Poznamky
         {
             InitializeComponent();
         }
-
-        readonly SQLiteAsyncConnection _database;
-
-        public NoteDatabase(string dbPath)
+        protected override async void OnAppearing()
         {
-            _database = new SQLiteAsyncConnection(dbPath);
-            _database.CreateTableAsync<Note>().Wait();
+            base.OnAppearing();
+
+            listView.ItemsSource = await App.Database.GetNotesAsync();
+        }
+
+        async void OnNoteAdd(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new NotePage
+            {
+                BindingContext = new Note()
+            });
+        }
+        async void OnNoteSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem != null)
+            {
+                await Navigation.PushAsync(new NotePage
+                {
+                    BindingContext = e.SelectedItem as Note
+                });
+            }
         }
     }
 }
